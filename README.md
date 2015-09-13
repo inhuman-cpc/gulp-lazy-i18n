@@ -7,17 +7,19 @@
 ## sample code
 
 ```js
-var properties = require ("properties")
-
 gulp.task('i18n', function() {
   var dict = {
-    cn: _.invert(properties.parse(fs.readFileSync('src/resource/cn.properties', 'utf8'))),
-    en: properties.parse(fs.readFileSync('src/resource/en.properties', 'utf8')),
-    tw: properties.parse(fs.readFileSync('src/resource/tw.properties', 'utf8'))
+    cn: require('i18n/cn.json'),
+    en: require('i18n/en.json'),
+    tw: require('i18n/tw.json'),
   }
+  
+  // 源码是中文，把键值对反转一下
+  dict.cn = _.invert(dict.cn)
 
   var i18nConfig = {
     locales: ['en', 'tw'],
+    // 自定义一个转换函数
     translate: function(content, lang) {
       return content.replace(/([\u3400-\u9FBF]+)/g, function(str, match) {
         return dict[lang][dict.cn[match]] || match
@@ -25,7 +27,8 @@ gulp.task('i18n', function() {
     }
   }
 
-  return gulp.src('assets-build/js/app*.js')
+  return gulp.src('assets-build/js/*.js')
+    .pipe(minify())
     .pipe(i18n(i18nConfig))
     .pipe(gulp.dest('assets-build/js/'))
 })

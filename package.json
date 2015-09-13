@@ -1,6 +1,6 @@
 {
   "name": "gulp-lazy-i18n",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "懒人的国际化方案，适合中文项目快速国际化",
   "keywords": [
     "lazy",
