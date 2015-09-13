@@ -11,12 +11,12 @@ function translate(opts) {
 
   return through.obj(function (file, enc, cb) {
     if (file.isNull()) {
-      return cb(null, file);
+      return cb(null, file)
     }
 
     if (file.isStream()) {
-      self.emit('error', new PluginError(PLUGIN_NAME, "Streams aren't supported."));
-      return cb();
+      self.emit('error', new PluginError(PLUGIN_NAME, "Streams aren't supported."))
+      return cb()
     }
 
     if (file.isBuffer()) {
@@ -41,17 +41,18 @@ function translate(opts) {
           _this.push(new File({
             cwd: file.cwd,
             base: file.base,
-            path: path.dirname(file.path) + '/' + path.basename(file.path, extname) + '-' + lang + extname,
+            path: path.dirname(file.path) + '/' + path.basename(file.path, extname) +
+              '-' + lang + extname,
             contents: new Buffer(output)
           }))
         }
       })
 
-      return cb();
+      return cb()
     }
 
-    cb(null, file);
-  });
+    cb(null, file)
+  })
 }
 
-module.exports = translate;
+module.exports = translate
