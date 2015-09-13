@@ -36,7 +36,7 @@ function translate(opts) {
       var _this = this
       opts.locales.forEach(function (lang) {
         var extname = path.extname(file.path)
-        var output = translate.call(null, contents, lang)
+        var output = translate.call(file, contents, lang)
         if (output) {
           _this.push(new File({
             cwd: file.cwd,
